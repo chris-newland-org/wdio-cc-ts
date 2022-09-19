@@ -20,7 +20,7 @@ export const config: Options.Testrunner = {
   ],
   logLevel: 'info',
   bail: 0,
-  baseUrl: 'http://localhost',
+  baseUrl: 'https://www.saucedemo.com',
   waitforTimeout: 10000,
   connectionRetryTimeout: 120000,
   connectionRetryCount: 3,
@@ -31,7 +31,7 @@ export const config: Options.Testrunner = {
   // If you are using Cucumber you need to specify the location of your step definitions.
   cucumberOpts: {
     // <string[]> (file/dir) require files before executing features
-    require: ['.tests/step-definitions'],
+    require: ['./tests/step-definitions'],
     // <boolean> show full backtrace for errors
     backtrace: false,
     // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)

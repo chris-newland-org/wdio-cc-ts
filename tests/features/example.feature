@@ -1,12 +1,6 @@
-Feature: The Internet Guinea Pig Website
+Feature: Example feature
 
-  Scenario Outline: As a user, I can log into the secure area
-
+  Scenario: As a standard user, I can log into the site
     Given I am on the login page
-    When I login with <username> and <password>
-    Then I should see a flash message saying <message>
-
-    Examples:
-      | username | password             | message                        |
-      | tomsmith | SuperSecretPassword! | You logged into a secure area! |
-      | foobar   | barfoo               | Your username is invalid!      |
+    When I login as a standard user
+    Then I should see inventory page
