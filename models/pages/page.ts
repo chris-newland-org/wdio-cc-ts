@@ -3,9 +3,13 @@
  * that is shared across all page objects
  */
 export default abstract class Page {
-  path = ''
+  path = '/'
 
-  visit() {
-    return browser.url(`${this.path}`)
+  constructor(path = '') {
+    this.path = path
+  }
+
+  public async visit() {
+    return await browser.url(`${this.path}`)
   }
 }

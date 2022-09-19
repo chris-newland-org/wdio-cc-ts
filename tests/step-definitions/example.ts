@@ -1,13 +1,15 @@
 import { Given, When, Then } from '@wdio/cucumber-framework'
+import { loginPage } from '../../models'
+import { BASE_URL } from '../config'
 
-Given(/^I am on the login page"$/, () => {
-  console.log('I am on the login page')
+Given(/^I am on the login page$/, async () => {
+  await loginPage.visit()
 })
 
-When(/^I login as a standard user"$/, user => {
-  console.log('test')
+When(/^I login as a standard user$/, async () => {
+  await loginPage.login('standard_user')
 })
 
-Then(/^I should see inventory page"$/, title => {
-  expect(browser).toHaveTitle(title)
+Then(/^I should see inventory page$/, async () => {
+  expect(await browser.getUrl()).toEqual(`${BASE_URL}/inventory.html`)
 })

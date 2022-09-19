@@ -1,4 +1,5 @@
 import type { Options } from '@wdio/types'
+import { BASE_URL } from './tests/config'
 
 export const config: Options.Testrunner = {
   autoCompileOpts: {
@@ -8,7 +9,7 @@ export const config: Options.Testrunner = {
       project: 'tsconfig.json'
     }
   },
-  specs: ['.tests/features/**/*.feature'],
+  specs: ['./tests/features/**/*.feature'],
   exclude: [],
   maxInstances: 10,
   capabilities: [
@@ -20,18 +21,18 @@ export const config: Options.Testrunner = {
   ],
   logLevel: 'info',
   bail: 0,
-  baseUrl: 'https://www.saucedemo.com',
+  baseUrl: BASE_URL,
   waitforTimeout: 10000,
   connectionRetryTimeout: 120000,
   connectionRetryCount: 3,
   services: ['chromedriver'],
   framework: 'cucumber',
-  reporters: ['spec', ['allure', { outputDir: 'allure-reports' }]],
+  reporters: ['spec'],
 
   // If you are using Cucumber you need to specify the location of your step definitions.
   cucumberOpts: {
     // <string[]> (file/dir) require files before executing features
-    require: ['./tests/step-definitions'],
+    require: ['./tests/step-definitions/**/*.ts'],
     // <boolean> show full backtrace for errors
     backtrace: false,
     // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)
@@ -39,7 +40,7 @@ export const config: Options.Testrunner = {
     // <boolean> invoke formatters without executing steps
     dryRun: false,
     // <boolean> abort the run on first failure
-    failFast: false,
+    failFast: true,
     // <boolean> hide step definition snippets for pending steps
     snippets: true,
     // <boolean> hide source uris
