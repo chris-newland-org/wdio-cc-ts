@@ -1,20 +1,22 @@
 name: CI
-on: [push, pull_request]
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: ['**']
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
       - uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: 18
+
       - name: Install
-        run: npm install
+        run: npm ci
+
       - name: Test
-        run: npm run test
-      - uses: actions/upload-artifact@v1
-        if: failure()
-        with:
-          name: logs
-          path: logs
+        run: npm run test:ci
