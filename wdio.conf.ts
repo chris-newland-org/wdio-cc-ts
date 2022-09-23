@@ -1,5 +1,8 @@
 import type { Options } from '@wdio/types'
 import { BASE_URL } from './tests/config'
+import { removeSync } from 'fs-extra'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { generate } = require('multiple-cucumber-html-reporter')
 
 export const config: Options.Testrunner = {
   autoCompileOpts: {
@@ -27,7 +30,17 @@ export const config: Options.Testrunner = {
   connectionRetryCount: 3,
   services: ['chromedriver'],
   framework: 'cucumber',
-  reporters: ['spec'],
+  reporters: [
+    'spec',
+    [
+      'cucumberjs-json',
+      {
+        jsonFolder: '.tmp/json-reports/',
+        language: 'en',
+        disableHooks: true
+      }
+    ]
+  ],
 
   // If you are using Cucumber you need to specify the location of your step definitions.
   cucumberOpts: {
@@ -53,7 +66,7 @@ export const config: Options.Testrunner = {
     timeout: 60000,
     // <boolean> Enable this config to treat undefined definitions as warnings.
     ignoreUndefinedDefinitions: false
-  }
+  },
 
   //
   // =====
@@ -68,8 +81,9 @@ export const config: Options.Testrunner = {
    * @param {Object} config wdio configuration object
    * @param {Array.<Object>} capabilities list of capabilities details
    */
-  // onPrepare: function (config, capabilities) {
-  // },
+  onPrepare: () => {
+    removeSync('.tmp/')
+  },
   /**
    * Gets executed before a worker process is spawned and can be used to initialise specific service
    * for that worker as well as modify runtime environments in an async fashion.
@@ -210,8 +224,16 @@ export const config: Options.Testrunner = {
    * @param {Array.<Object>} capabilities list of capabilities details
    * @param {<Object>} results object containing test results
    */
-  // onComplete: function(exitCode, config, capabilities, results) {
-  // },
+  onComplete: () => {
+    // Generate the report when it all tests are done
+    generate({
+      // This part needs to be the same path where you store the JSON files
+      // default = '.tmp/json/'
+      jsonDir: '.tmp/json-reports/',
+      reportPath: '.tmp/html-report/',
+      metadata: false
+    })
+  }
   /**
    * Gets executed when a refresh happens.
    * @param {String} oldSessionId session ID of the old session
