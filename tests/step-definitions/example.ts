@@ -1,5 +1,5 @@
 import { Given, When, Then } from '@wdio/cucumber-framework'
-import { loginPage } from '../../models'
+import { loginPage } from '../../pages'
 import { BASE_URL } from '../config'
 
 Given(/^I am on the login page$/, async () => {

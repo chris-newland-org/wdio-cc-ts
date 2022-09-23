@@ -1,4 +1,4 @@
-import Component from '../components/component'
+import Component from './components/component'
 import Page from './page'
 
 export class LoginPage extends Page {
