@@ -20,3 +20,9 @@ jobs:
 
       - name: Test
         run: npm run test:ci
+
+      - name: Upload Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: .tmp/html-report
